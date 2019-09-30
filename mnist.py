@@ -72,14 +72,28 @@ print('test acc: ', test_acc)
 # The export path contains the name and the version of the model
 tf.keras.backend.set_learning_phase(0)  # Ignore dropout at inference
 keras_model = tf.keras.models.load_model('model_for_serving.h5')
-export_path = 'mnist_image_classifier/1'
+export_path = 'mnist_image_classifier/3'
 
 # Fetch the Keras session and save the model
 # The signature definition is defined by the input and output tensors
 # And stored with the default serving key
-with tf.keras.backend.get_session() as sess:
-    tf.saved_model.simple_save(
+'''
+    simple_save is depricated, it will be available in
+    v1, changed it to tf.compat.v1.saved_model
+    Also, tf.keras.backend.get_session is deprecated
+    changed it to tf.compat.v1.keras.backend.get_session
+'''
+# with tf.keras.backend.get_session() as sess:
+with tf.compat.v1.keras.backend.get_session() as sess:
+    # tf.saved_model.simple_save(
+    tf.compat.v1.saved_model.simple_save(
         sess,
         export_path,
         inputs={'input_image': keras_model.input},
         outputs={t.name: t for t in keras_model.outputs})
+
+'''
+    Use following command to look at the MetaGraphDefs (the models)
+    and SignatureDefs (the methods you can call) in our SavedModel:
+    saved_model_cli show --dir mnist_image_classifier/1 --all
+'''
