@@ -3,6 +3,7 @@ from keras import models
 from keras import layers
 from keras.utils import to_categorical
 from keras.models import model_from_json
+import tensorflow as tf
 
 # loading traing data and test data from mnist dataset
 (train_images, train_labels), (test_images, test_labels) = mnist.load_data()
@@ -39,6 +40,11 @@ with open("model.json", "w") as json_file:
 network.save_weights("model.h5")
 print("Saved model to disk")
 
+# saving model as whole so that it could be exported in tensorflow
+# for tensorflow serving
+
+network.save("model_for_serving.h5")
+
 # test the network with test data
 test_loss, test_acc = network.evaluate(test_images, test_labels)
 print('test acc: ', test_acc)
@@ -59,3 +65,21 @@ loaded_model.compile(optimizer='rmsprop',
                 metrics=['accuracy'])
 test_loss, test_acc = loaded_model.evaluate(test_images, test_labels)
 print('test acc: ', test_acc)
+
+# export this tested model to tensorflow model so that it could be served using
+# tensorflow serving
+
+# The export path contains the name and the version of the model
+tf.keras.backend.set_learning_phase(0)  # Ignore dropout at inference
+keras_model = tf.keras.models.load_model('model_for_serving.h5')
+export_path = 'mnist_image_classifier/1'
+
+# Fetch the Keras session and save the model
+# The signature definition is defined by the input and output tensors
+# And stored with the default serving key
+with tf.keras.backend.get_session() as sess:
+    tf.saved_model.simple_save(
+        sess,
+        export_path,
+        inputs={'input_image': keras_model.input},
+        outputs={t.name: t for t in keras_model.outputs})
