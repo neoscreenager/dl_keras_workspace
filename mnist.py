@@ -72,7 +72,7 @@ print('test acc: ', test_acc)
 # The export path contains the name and the version of the model
 tf.keras.backend.set_learning_phase(0)  # Ignore dropout at inference
 keras_model = tf.keras.models.load_model('model_for_serving.h5')
-export_path = 'mnist_image_classifier/3'
+export_path = 'mnist_image_classifier/2'
 
 # Fetch the Keras session and save the model
 # The signature definition is defined by the input and output tensors
