@@ -1,3 +1,5 @@
+import warnings
+warnings.filterwarnings('ignore',category=FutureWarning) # to ignore the numpy warnings
 import json
 import numpy as np
 import requests
@@ -6,7 +8,7 @@ from keras.preprocessing.image import img_to_array
 
 def load_image(filename):
 	# load the image
-	img = load_img(filename, grayscale=True, target_size=(28, 28))
+	img = load_img(filename, color_mode="grayscale", target_size=(28, 28))
 	# convert to array
 	img = img_to_array(img)
 	# reshape into a single sample with 1 channel
@@ -18,16 +20,18 @@ def load_image(filename):
 
 # Preprocessing our input image
 img = load_image("./digit_7.png")
-#print(img.tolist())
-headers = {"content-type": "application/json"}
+# print(img.tolist())
+# headers = {"content-type": "application/json"}
 # data = json.dumps({"signature_name": "serving_default", "instances": [{'input_image': img.tolist()}]})
-data = json.dumps({"instances": [{'input_image': img.tolist()}]})
-'''payload = {
+#data = json.dumps({"instances": [{'input_image': img.tolist()}]})
+#data = json.dumps({"instances": img.tolist()})
+# data = {'instances': [{'input_image': img.tolist()}]}
+payload = {
     "instances": [{'input_image': img.tolist()}]
-}'''
+}
 
 # sending post request to TensorFlow Serving server
-json_response = requests.post('http://localhost:9000/v1/models/MnistClassifier:predict', data=data, headers=headers)
+json_response = requests.post('http://localhost:9000/v1/models/MnistClassifier:predict', json=payload) #, headers=headers)
 print(json_response)
 predictions = json.loads(json_response.text)['predictions']
 print(predictions)
