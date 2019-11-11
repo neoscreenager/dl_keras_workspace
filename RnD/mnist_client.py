@@ -2,6 +2,12 @@
     Client code to test the mnist model served via tenorflow serving.
     It takes the test image from mnist dataset and call REST api for predictions.
     TO DO: TO MAKE A PREDICTION USING A FILE FROM THE DISK INSTEAD OF PICKING FROM DATASET.
+    Note: Ensure that tensorflow-model-server is running on port 9000, if not, use following 
+    command to start the server:
+    tensorflow_model_server --model_base_path=/home/neo/dl_keras_workspace/RnD/rnd/mnist_image_classifier
+     --rest_api_port=9000 --model_name=MnistClassifier
+     Change the value of model_name and model_base_path accordingly
+     
 '''
 import warnings
 warnings.filterwarnings('ignore',category=FutureWarning) # to ignore the numpy warnings
