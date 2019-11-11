@@ -1,3 +1,5 @@
+import warnings
+warnings.filterwarnings('ignore',category=FutureWarning) # to ignore the numpy warnings
 from keras.datasets import mnist
 from keras import models
 from keras import layers
