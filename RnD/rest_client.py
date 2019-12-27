@@ -10,7 +10,7 @@ from scipy import ndimage
 
 
 #image_path = 'digit_7.png'
-image_path = '7.jpg'
+image_path = '5.jpg'
 # Preprocessing our input image
 ## img = image.img_to_array(image.load_img(image_path, target_size=(224, 224))) / 255.
 
