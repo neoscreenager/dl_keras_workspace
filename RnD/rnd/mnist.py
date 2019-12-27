@@ -51,6 +51,7 @@ def train_mnist(version):
     # test the network with test data
     test_loss, test_acc = network.evaluate(test_images, test_labels)
     print('test acc: ', test_acc)
+    print('test_loss: ', test_loss)
 
     # load json and create model
     json_file = open('model.json', 'r')

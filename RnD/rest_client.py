@@ -1,3 +1,10 @@
+'''
+    Client to make predictions using a file from the disk and trained MNIST model
+    served via tensorflow model serving.
+    Images are pre-processed first and then used for recognition.
+
+'''
+
 import warnings
 warnings.filterwarnings('ignore',category=FutureWarning) # to ignore the numpy warnings
 import json

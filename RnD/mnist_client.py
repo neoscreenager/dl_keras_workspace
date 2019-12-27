@@ -8,10 +8,6 @@
      Change the value of model_name and model_base_path accordingly
           
 '''
-'''
-    TO DO: TO MAKE A PREDICTION USING A FILE FROM THE DISK INSTEAD OF PICKING FROM DATASET.
-
-'''
 
 import warnings
 warnings.filterwarnings('ignore',category=FutureWarning) # to ignore the numpy warnings
@@ -24,17 +20,17 @@ from keras.utils import to_categorical
 
 # loading test images from mnist dataset and randomly choosing one and call serving
 # to get predictions
-# loading traing data and test data from mnist dataset
+# loading training data and test data from mnist dataset
 (train_images, train_labels), (test_images, test_labels) = mnist.load_data()
 
-# preprocessing the image data
+# pre-processing the image data
 train_images = train_images.reshape((60000,28 * 28))
 train_images = train_images.astype('float32') / 255
 
 test_images = test_images.reshape((10000,28 * 28))
 test_images = test_images.astype('float32') / 255
 
-# preprocessing labels by catagorically encoding them
+# pre-processing labels by categorically encoding them
 train_labels = to_categorical(train_labels)
 test_labels  = to_categorical(test_labels)
 
