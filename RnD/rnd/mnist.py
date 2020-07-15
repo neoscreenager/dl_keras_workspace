@@ -1,3 +1,13 @@
+'''
+    The train_mnist function do following things:
+    1. It creates the network and trains it with MNIST dataset available in Keras.
+    2. Save the model to the disk in .h5 format.
+    3. Load the saved model and test its accuracy.
+    4. Export this tested keras model to tensorflow model so that it could be served
+       using tensorflow serving.
+    
+'''
+
 import warnings
 warnings.filterwarnings('ignore',category=FutureWarning) # to ignore the numpy warnings
 from keras.datasets import mnist
@@ -104,4 +114,5 @@ def train_mnist(version):
     '''
 
 if __name__ == "__main__":
-    train_mnist('5')
+    train_mnist('6')
+    

@@ -44,9 +44,13 @@ def show(idx, title):
 # sending post request to TensorFlow Serving server
 data = json.dumps({"signature_name": "serving_default", "instances": test_images[0:3].tolist()})
 headers = {"content-type": "application/json"}
+print(data)
+print(headers)
 json_response = requests.post('http://localhost:9000/v1/models/MnistClassifier:predict', data=data, headers=headers)
-predictions = json.loads(json_response.text)['predictions']
+print(json_response)
+'''predictions = json.loads(json_response.text)['predictions']
 print(predictions)
 for i in range(0,3):
     show(i, 'The model thought this was a {} (class {}), and it was actually a {} (class {})'.format(
   np.argmax(predictions[i]), test_labels[i], np.argmax(predictions[i]), test_labels[i]))
+'''
