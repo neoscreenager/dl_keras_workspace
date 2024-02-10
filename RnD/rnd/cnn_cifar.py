@@ -64,6 +64,8 @@ plt.xlabel('Epoch')
 plt.ylabel('Accuracy')
 plt.ylim([0.5, 1])
 plt.legend(loc='lower right')
+plt.show()
 
 test_loss, test_acc = model.evaluate(test_images,  test_labels, verbose=2)
+
 

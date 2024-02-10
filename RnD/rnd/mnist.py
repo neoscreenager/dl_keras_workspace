@@ -114,5 +114,5 @@ def train_mnist(version):
     '''
 
 if __name__ == "__main__":
-    train_mnist('6')
+    train_mnist('1')
     
