@@ -8,6 +8,7 @@ from llama_index.llms.llama_utils import (
     messages_to_prompt,
     completion_to_prompt,
     )
+from llama_index.storage import storage_context
 
 llm = LlamaCPP(
     model_path="/home/neo/local_llm_models/Publisher/Repository/llama-2-7b-chat.Q4_K_M.gguf",
@@ -42,12 +43,18 @@ service_context = ServiceContext.from_defaults(
 documents = SimpleDirectoryReader(
     "./data"
 ).load_data()
-# create vector store index
+# create vector store index    
 index = VectorStoreIndex.from_documents(
     documents, service_context=service_context
 )
+index.storage_context.persist() # persisting the vector indexes in json format in "storage" folder in current directory
 # set up query engine
 query_engine = index.as_query_engine()
+# To use the already index vector database:
+# from llama_index import StorageContext,load_index_from_storage
+# storage_context = StorageContext.from_defaults(persist_dir="./storage")
+# index = load_index_from_storage(storage_context=storage_context)
+
 response = query_engine.query("How to replace hard disk on my Lenovo laptop?")
 print(response)
 #response = llm.complete("Hi, can you generate a python code to upload files?")
