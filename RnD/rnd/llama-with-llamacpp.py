@@ -66,10 +66,10 @@ documents = SimpleDirectoryReader(
 index = VectorStoreIndex.from_documents(documents, embed_model=embed_model)
 
 # set up query engine
-query_engine = index.as_query_engine(llm=llm)
+query_engine = index.as_query_engine(llm=llm,streaming=True, similarity_top_k=1)
 
-response = query_engine.query("Who is the founder of Apollo Hospital?")
-print(response.)
+streaming_response = query_engine.query("What is the process of changing hard disk of lenovo laptop?")
+streaming_response.print_response_stream()
 
 # # create vector store index    
 # index = VectorStoreIndex.from_documents(
